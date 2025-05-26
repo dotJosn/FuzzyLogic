@@ -1,5 +1,19 @@
+"""
+Equipe Josn ( Allan - Adrian - Gustavo - Tiago )
+
+V1 - Umidade interna do motor
+
+V2 - Ruído acústico
+
+V3 - Vibração transversal (vertical/lateral)
+
+V4 - Corrente nominal em carga
+
+V5 - Torque entregue
+"""
+
 # Instalar bibliotecas necessárias
-!pip install scikit-fuzzy
+# !pip install scikit-fuzzy
 
 import numpy as np
 import skfuzzy as fuzz
@@ -38,13 +52,13 @@ vibracao['baixa'] = fuzz.trapmf(vibracao.universe, [0, 0, 1.0, 2.5])
 vibracao['normal'] = fuzz.trimf(vibracao.universe, [2.0, 3.5, 4.5])
 vibracao['alta'] = fuzz.trapmf(vibracao.universe, [4.0, 4.5, 10, 10])
 
-# Corrente Nominal (%)
-corrente['baixa'] = fuzz.trapmf(corrente.universe, [0, 0, 205, 250])  # até ~85% da nominal
-corrente['media'] = fuzz.trimf(corrente.universe, [235, 293, 337])     # ~80% a 115% da nominal
-corrente['alta'] = fuzz.trapmf(corrente.universe, [322, 352, 450, 450])  # >110%
+# Corrente Nominal
+corrente['baixa'] = fuzz.trapmf(corrente.universe, [0, 0, 205, 250])
+corrente['media'] = fuzz.trimf(corrente.universe, [235, 293, 337])
+corrente['alta'] = fuzz.trapmf(corrente.universe, [322, 352, 450, 450])
 
 
-# Torque Entregue (%)
+# Torque Entregue
 torque['baixo'] = fuzz.trapmf(torque.universe, [0.0, 0.0, 0.8, 0.9])
 torque['medio'] = fuzz.trimf(torque.universe, [0.85, 1.0, 1.15])
 torque['alto'] = fuzz.trapmf(torque.universe, [1.1, 1.3, 2.0, 2.0])
@@ -90,7 +104,7 @@ def avaliar_risco_motor():
         ruid = float(input("Nível de ruído (dB) (0 a 140): "))
         vib = float(input("Vibração transversal (mm/s) (0 a 10): "))
         corr = float(input("Corrente medida (A) (0 a 450): "))
-        torq = float(input("Torque (% da nominal) (0 a 2): ")) / 100
+        torq = float(input("Torque (% da nominal) (0 a 2): "))
 
         # Validar entradas
         limites = {
@@ -132,7 +146,7 @@ def avaliar_risco_motor():
         print(f"• Umidade: {umid}%")
         print(f"• Ruído: {ruid} dB")
         print(f"• Vibração: {vib} mm/s")
-        print(f"• Corrente: {corr*100:.1f}%")
+        print(f"• Corrente: {corr}")
         print(f"• Torque: {torq*100:.1f}%")
 
         # Calcular pertinências
